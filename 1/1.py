@@ -1,4 +1,4 @@
-file = open("1.txt", "r")
+file = open("1s.txt", "r")
 x = 50
 count = 0
 for line in file:
@@ -19,14 +19,14 @@ for line in file:
             print("count: ", count)
         x = y
     print('so x now', x)
-    if x == 0:
-        count +=1
-        print("landed on 0: count: ", count)
+    # if x == 0:
+    #     count +=1
+    #     print("landed on 0: count: ", count)
 file.close()
 print(count, "i")
 
 '''
-6792 < ? < 8047
+6792 < ? < 6889
 
 #to pass part 1 should be:
 file = open("a.txt", "r")

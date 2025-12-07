@@ -1,3 +1,19 @@
+file = open("t.txt", "r")
+x = 50
+count = 0
+for line in file:
+    l = int(line[1:])
+    if line[0] == "R":
+        x = (x + l) % 100
+        count += (x + l) // 100
+    else:
+        x = (100 - l + x) % 100
+        count += (100 - l + x) // 100
+    print(line, 'so x now', x)
+file.close()
+print(count, "i")
+
+'''
 file = open("1s.txt", "r")
 x = 50
 count = 0
@@ -24,9 +40,7 @@ for line in file:
     #     print("landed on 0: count: ", count)
 file.close()
 print(count, "i")
-
-'''
-6792 < ? < 6889
+6792 < ? < *6889
 
 #to pass part 1 should be:
 file = open("a.txt", "r")

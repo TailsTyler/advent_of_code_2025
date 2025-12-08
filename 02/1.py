@@ -2,6 +2,7 @@ import csv
 
 with open('t.csv', newline='', encoding='utf-8') as f:
     row = next(csv.reader(f, delimiter=','))
+ans = 0
 for e in row:
     print(e)
     i = e.index('-')
@@ -16,7 +17,13 @@ for e in row:
             l = '1' + ('0' * (length // 2)) #make first half
             l+= l #add duped second half
             print("new l: ", l)
-        
+        else:
+            ans+=int(l)
+            l = l[0:len(l)/2]
+            print("cut: ", l)
+
+    print("ans: ", ans)
+
 
 
     

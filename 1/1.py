@@ -1,14 +1,23 @@
-file = open("t.txt", "r")
+file = open("m.txt", "r")
 x = 50
 count = 0
 for line in file:
     l = int(line[1:])
     if line[0] == "R":
-        x = (x + l) % 100
-        count += (x + l) // 100
+        print("x = ", x)
+        print("l = ", l)
+        mod = (x + l) % 100
+        print("mod = ", mod)
+        x += mod
+        floor = (x + l) // 100
+        print("count += ", floor)
+        count += floor
+        print(count)
     else:
         x = (100 - l + x) % 100
         count += (100 - l + x) // 100
+        print("count += ", (100 - l + x) // 100)
+        print (count)
     print(line, 'so x now', x)
 file.close()
 print(count, "i")

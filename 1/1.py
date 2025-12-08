@@ -1,24 +1,29 @@
-file = open("m.txt", "r")
+file = open("1.txt", "r")
 x = 50
 count = 0
 for line in file:
     l = int(line[1:])
+    print('line: ', line)
     if line[0] == "R":
+        print(line)
         print("x = ", x)
-        print("l = ", l)
-        mod = (x + l) % 100
-        print("mod = ", mod)
-        x += mod
         floor = (x + l) // 100
         print("count += ", floor)
         count += floor
+        mod = l % 100
+        print("mod = ", mod)
+        x = (x + mod) % 100
         print(count)
     else:
-        x = (100 - l + x) % 100
-        count += (100 - l + x) // 100
-        print("count += ", (100 - l + x) // 100)
-        print (count)
-    print(line, 'so x now', x)
+        print("x = ", x)
+        floor = ((100 - x) % 100 + l) // 100
+        print("count += ", floor)
+        count += floor
+        mod = l % 100
+        print("mod = ", mod)
+        x = (x - mod) % 100
+        print(count)
+    print('so x now', x, '\n')
 file.close()
 print(count, "i")
 

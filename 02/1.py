@@ -1,17 +1,17 @@
 import csv
 
-with open('t.csv', newline='', encoding='utf-8') as f:
+with open('1.csv', newline='', encoding='utf-8') as f:
     row = next(csv.reader(f, delimiter=','))
 ans = 0
 for e in row:
     print('e: ', e)
     i = e.index('-')
     l = e[0:i]
-    print('l: ', l)
     r = e[i+1:]
-    print('r: ', r)
     start = True
     while int(l) <= int(r):
+        print("l: ", l)
+        print("r: ", r)
         length = len(l)
         print("l[0:len(l)//2]: ", l[0:len(l)//2])
         print("l[len(l)//2:]:  ", l[len(l)//2:])
@@ -30,11 +30,17 @@ for e in row:
         else:
             first_half = l[0:len(l)//2]
             print("first_half = ", first_half)
-            l = first_half + first_half
+            second_half = l[len(l)//2:]
+            print("second_half: ", second_half)
+            if first_half > second_half:
+                l = first_half + first_half
+            else:
+                first_half = str(int(first_half) + 1)
+                l = first_half + first_half
             print("l = ", l)
             start = False
-            continue
-        #jumps ahead to next match
+            continue    
+        #jumps ahead to next match 
         l = l[0:len(l)//2] #cut off 2nd half 
         l = str(int(l) + 1) #increment
         l += l # dupe 1st half to make 2nd half
@@ -50,5 +56,6 @@ for e in row:
 
 '''
 
-
+33 480 589 235 < x < 
+38 158 151 648
 '''

@@ -19,10 +19,30 @@ for e in row:
         i = 1
         potential_repeating_string = l[0]
         while i < len(l)//2:
-            while l[i] != l[0]
-                potential_repeating_string += l[i]
+            while l[i] != l[0]:
+                #potential_repeating_string
+                prs += l[i]
                 i+=1
-            while 
+            valid = False
+            while i< len(l):
+                for j in prs:
+                    if i != j:
+                        valid = True
+                        break
+                if valid:
+                    break
+            if not valid:
+                print("ans += int(l)")
+                ans += int(l)
+                print(ans)
+            
+            
+            
+            
+            
+                
+
+
 
 
         elif not start or l[0:len(l)//2] == l[len(l)//2:]:

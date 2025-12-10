@@ -16,14 +16,15 @@ for e in row:
         print("l[0:len(l)//2]: ", l[0:len(l)//2])
         print("l[len(l)//2:]:  ", l[len(l)//2:])
         print("length: ", length)
-        print("length % 2: ", length % 2)
-        if length % 2: #odd num of digits so cannot be something repeated twice
-            #always start w something like 11, 1010, 100100, etc
-            #make first half by adding howevermany 0s
-            l = '1' + ('0' * (length // 2)) 
-            l+= l #add duped second half
-            print("new l: ", l)
-            continue
+        i = 1
+        potential_repeating_string = l[0]
+        while i < len(l)//2:
+            while l[i] != l[0]
+                potential_repeating_string += l[i]
+                i+=1
+            while 
+
+
         elif not start or l[0:len(l)//2] == l[len(l)//2:]:
             print("found one!: ", l)
             ans+=int(l)

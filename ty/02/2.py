@@ -30,6 +30,8 @@ for e in row:
         while i <= len(l)//2:
             print("i = ", i)
             '''
+            get prs
+
             must ignore prs that l is not divisible by:
             with
             221111,
@@ -42,7 +44,6 @@ for e in row:
             while l[i] != l[0] or len(l) % i != 0:
                 prs += l[i]
                 i+=1
-            
             #todo
             valid = False
             #compare prs to rest of l
@@ -67,7 +68,9 @@ for e in row:
             i = 0
             new_l = ''
             while i < len(l) / len(prs):
+                print("new_l+= prs")
                 new_l+= prs
+                i+=1
         break
        
         '''

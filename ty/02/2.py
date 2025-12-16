@@ -13,7 +13,7 @@ def all_9s(prs):
 def next_invalid_id(l, prs):
     #if prs is all 9s, just increase l by 1
     if all_9s(prs):
-        l = str(int(l) + 1)
+        l2 = str(int(l) + 1)
     #otherwise increase rs by 1
     else:
         l2 = l
@@ -21,7 +21,6 @@ def next_invalid_id(l, prs):
         i = 0
         l2 = ''
         print('l: ', l)
-        print("type(l): ", type(l))
         print("finding any next rs")
         print("len(l2): ", len(l2))
         print("len(prs): ", len(prs))
@@ -61,8 +60,7 @@ def get_prs(l, i):
 # print("all_9s('1')",  all_9s('1'))
 # print("all_9s('19')",  all_9s('19'))
 # print("all_9s('999')",  all_9s('999'))
-print("next_invalid_id('12', '1'): ", next_invalid_id('12', '1'))
-print("j")
+# print("next_invalid_id('12', '1'): ", next_invalid_id('12', '1'))
 ans = 0
 for e in row:
     print('e: ', e)
@@ -73,8 +71,8 @@ for e in row:
     while int(l) <= int(r):
         print("l: ", l)
         print("r: ", r)
-        print("l[0:len(l)//2]: ", l[0:len(l)//2])
-        print("l[len(l)//2:]:  ", l[len(l)//2:])
+        # print("l[0:len(l)//2]: ", l[0:len(l)//2])
+        # print("l[len(l)//2:]:  ", l[len(l)//2:])
         i = 1
         #potential_repeating_string
         prs = get_prs(l, i)
@@ -86,7 +84,6 @@ for e in row:
                 if l[i] != j:
                     valid = True
                     print("break 1")
-                    l= str(int(l) + 1)
                     break
             break
         if not valid:
@@ -95,7 +92,7 @@ for e in row:
             print("ans: ", ans)
         #increase l to next possible invalid id
         l = next_invalid_id(l, prs)  
-        break
+        
        
         '''
         11 -22

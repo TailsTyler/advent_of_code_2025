@@ -10,7 +10,7 @@ def all_9s(prs):
             return False
     return True
 
-def next_invalid_id(l, prs, i):
+def next_invalid_id(l, prs):
     #if prs is all 9s, just increase l by 1
     if all_9s(prs):
         l = str(int(l) + 1)
@@ -20,6 +20,8 @@ def next_invalid_id(l, prs, i):
         prs = str(int(prs) + 1)
         i = 0
         l2 = ''
+        print('l: ', l)
+        print("type(l): ", type(l))
         print("finding any next rs")
         print("len(l2): ", len(l2))
         print("len(prs): ", len(prs))
@@ -30,13 +32,14 @@ def next_invalid_id(l, prs, i):
             i+=1
             print("l2 = ", l2)
         if l2 == '':
-            l2 = l
-            break
+            #if there is no prs, we want to stop looking by making l larger than r
+            l2 = str(int(r) + 1)
+    return l2
 def get_prs(l, i):
     #potential_repeating_string
     prs = l[0]
     print("len(l)//2: ", len(l)//2)
-    while i <= len(l)//2:
+    while i <= len(l)//2 and l[i] != l[0] or len(l) % i != 0:
         print("l: ", l)
         print("i = ", i)
         '''
@@ -51,10 +54,15 @@ def get_prs(l, i):
         hence
         'or len(l) % i not 0'
         '''
-        while l[i] != l[0] or len(l) % i != 0:
-            prs += l[i]
-            i+=1
+        prs += l[i]
+        i+=1
+    return prs
 
+# print("all_9s('1')",  all_9s('1'))
+# print("all_9s('19')",  all_9s('19'))
+# print("all_9s('999')",  all_9s('999'))
+print("next_invalid_id('12', '1'): ", next_invalid_id('12', '1'))
+print("j")
 ans = 0
 for e in row:
     print('e: ', e)
@@ -69,7 +77,7 @@ for e in row:
         print("l[len(l)//2:]:  ", l[len(l)//2:])
         i = 1
         #potential_repeating_string
-        prs = get_prs(l)
+        prs = get_prs(l, i)
         #todo
         valid = False
         #compare prs to rest of l
@@ -78,7 +86,7 @@ for e in row:
                 if l[i] != j:
                     valid = True
                     print("break 1")
-                    l+=1
+                    l= str(int(l) + 1)
                     break
             break
         if not valid:
@@ -86,7 +94,7 @@ for e in row:
             ans += int(l)
             print("ans: ", ans)
         #increase l to next possible invalid id
-        l = next_invalid_id(l, prs, i)  
+        l = next_invalid_id(l, prs)  
         break
        
         '''

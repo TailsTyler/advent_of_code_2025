@@ -10,6 +10,50 @@ def all_9s(prs):
             return False
     return True
 
+def next_invalid_id(l, prs, i):
+    #if prs is all 9s, just increase l by 1
+    if all_9s(prs):
+        l = str(int(l) + 1)
+    #otherwise increase rs by 1
+    else:
+        l2 = l
+        prs = str(int(prs) + 1)
+        i = 0
+        l2 = ''
+        print("finding any next rs")
+        print("len(l2): ", len(l2))
+        print("len(prs): ", len(prs))
+        print("len(l2) / len(prs): ", len(l2) / len(prs))
+        while i < len(l) / len(prs):
+            print("l2 += prs")
+            l2 += prs
+            i+=1
+            print("l2 = ", l2)
+        if l2 == '':
+            l2 = l
+            break
+def get_prs(l, i):
+    #potential_repeating_string
+    prs = l[0]
+    print("len(l)//2: ", len(l)//2)
+    while i <= len(l)//2:
+        print("l: ", l)
+        print("i = ", i)
+        '''
+        get prs
+
+        must ignore prs that l is not divisible by:
+        with
+        221111,
+        221 221
+        must be found before
+        22 22 22
+        hence
+        'or len(l) % i not 0'
+        '''
+        while l[i] != l[0] or len(l) % i != 0:
+            prs += l[i]
+            i+=1
 
 ans = 0
 for e in row:
@@ -25,52 +69,24 @@ for e in row:
         print("l[len(l)//2:]:  ", l[len(l)//2:])
         i = 1
         #potential_repeating_string
-        prs = l[0]
-        print("len(l)//2: ", len(l)//2)
-        while i <= len(l)//2:
-            print("i = ", i)
-            '''
-            get prs
-
-            must ignore prs that l is not divisible by:
-            with
-            221111,
-            221 221
-            must be found before
-            22 22 22
-            hence
-            'or len(l) % i not 0'
-            '''
-            while l[i] != l[0] or len(l) % i != 0:
-                prs += l[i]
-                i+=1
-            #todo
-            valid = False
-            #compare prs to rest of l
-            while i< len(l):
-                for j in prs:
-                    if l[i] != j:
-                        valid = True
-                        print("break 1")
-                        l+=1
-                        break
-                break
-            if not valid:
-                print("ans += ", l)
-                ans += int(l)
-                print("ans: ", ans)
-            #increase l to next possible invalid id
-            #if prs is all 9s, just increase l by 1
-            if all_9s(prs):
-                l = str(int(l) + 1)
-            #otherwise increase rs by 1
-            prs = str(int(prs) + 1)
-            i = 0
-            new_l = ''
-            while i < len(l) / len(prs):
-                print("new_l+= prs")
-                new_l+= prs
-                i+=1
+        prs = get_prs(l)
+        #todo
+        valid = False
+        #compare prs to rest of l
+        while i< len(l):
+            for j in prs:
+                if l[i] != j:
+                    valid = True
+                    print("break 1")
+                    l+=1
+                    break
+            break
+        if not valid:
+            print("ans += ", l)
+            ans += int(l)
+            print("ans: ", ans)
+        #increase l to next possible invalid id
+        l = next_invalid_id(l, prs, i)  
         break
        
         '''

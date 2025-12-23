@@ -4,7 +4,7 @@ with open('m.csv', newline='', encoding='utf-8') as f:
     row = next(csv.reader(f, delimiter=','))
 
 
-def all_9s(prs):
+def all_9s(l):
     for e in prs:
         if e != '9':
             return False
@@ -12,20 +12,25 @@ def all_9s(prs):
 
 def next_invalid_id(l, prs):
     #if prs is all 9s, just increase l by 1
-    if all_9s(prs):
-        l2 = str(int(l) + 1)
+    if all_9s(l):
+        print("all 9s")
+        return str(int(l) + 1)
     #otherwise increase rs by 1
     else:
         l2 = l
+        print("prs: ", prs)
+        print("prs = str(int(prs) + 1)")
         prs = str(int(prs) + 1)
+        print("prs: ", prs)
         i = 0
         l2 = ''
         print('l: ', l)
         print("finding any next rs")
-        print("len(l2): ", len(l2))
+        print("len(l): ", len(l))
         print("len(prs): ", len(prs))
-        print("len(l2) / len(prs): ", len(l2) / len(prs))
-        while i < len(l) / len(prs):
+        print("len(l) // len(prs): ", len(l) // len(prs))
+        while i < len(l) // len(prs):
+            print("l2 = ", l2)
             print("l2 += prs")
             l2 += prs
             i+=1
@@ -34,11 +39,15 @@ def next_invalid_id(l, prs):
             #if there is no prs, we want to stop looking by making l larger than r
             l2 = str(int(r) + 1)
     return l2
-def get_prs(l, i):
+def get_prs(l):
     #potential_repeating_string
     prs = l[0]
     print("len(l)//2: ", len(l)//2)
-    while i <= len(l)//2 and l[i] != l[0] or len(l) % i != 0:
+    # print("i <= len(l)//2")
+    # print(i <= len(l)//2)
+
+    i = 1
+    while i < len(l)//2 and l[i] != l[0] or len(l) % i != 0:
         print("l: ", l)
         print("i = ", i)
         '''
@@ -75,7 +84,7 @@ for e in row:
         # print("l[len(l)//2:]:  ", l[len(l)//2:])
         i = 1
         #potential_repeating_string
-        prs = get_prs(l, i)
+        prs = get_prs(l)
         #todo
         valid = False
         #compare prs to rest of l
@@ -89,30 +98,36 @@ for e in row:
         if not valid:
             print("ans += ", l)
             ans += int(l)
-            print("ans: ", ans)
+            print("ans: ", ans, "\n")
         #increase l to next possible invalid id
+        print("ll1: ", l)
+        print("getting next invalid id")
         l = next_invalid_id(l, prs)  
+        print("ll: ", l)
+print("ans: ", ans)
         
        
-        '''
-        11 -22
-        111 - 222
-        1212 1313
+'''
+too low
 
-        21 21
-        2 2 2 2 
-        23 23 
+11 -22
+111 - 222
+1212 1313
 
-        12 12
-        13 13 
+21 21
+2 2 2 2 
+23 23 
 
-        12 22
-        1211 1212
-        121120 
-        999
-        9999
+12 12
+13 13 
 
-        99 99
+12 22
+1211 1212
+121120 
+999
+9999
+
+99 99
 
 
 

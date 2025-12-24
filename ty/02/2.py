@@ -4,13 +4,14 @@ with open('m.csv', newline='', encoding='utf-8') as f:
     row = next(csv.reader(f, delimiter=','))
 
 
-def all_9s(l):
-    for e in prs:
+def all_9s(s):
+    for e in s:
         if e != '9':
             return False
     return True
 
 def next_invalid_id(l, prs):
+    print("l3: ", l)
     #if prs is all 9s, just increase l by 1
     if all_9s(l):
         print("all 9s")
@@ -76,38 +77,48 @@ for e in row:
     i = e.index('-')
     l = e[0:i]
     r = e[i+1:]
-    start = True
+    known_invalid = False
+    limit = 0
     while int(l) <= int(r):
         print("l: ", l)
         print("r: ", r)
         # print("l[0:len(l)//2]: ", l[0:len(l)//2])
         # print("l[len(l)//2:]:  ", l[len(l)//2:])
-        i = 1
-        #potential_repeating_string
-        prs = get_prs(l)
-        #todo
-        valid = False
-        #compare prs to rest of l
-        while i< len(l):
-            for j in prs:
-                if l[i] != j:
-                    valid = True
-                    print("break 1")
-                    break
-            break
-        if not valid:
+        if not known_invalid:
+            i = 1
+            #potential_repeating_string
+            prs = get_prs(l)
+            #compare prs to rest of l
+            while i< len(l):
+                for j in prs:
+                    if l[i] != j:
+                        print("break 1")
+                        break
+                break
+            known_invalid = True
+        else:
             print("ans += ", l)
             ans += int(l)
             print("ans: ", ans, "\n")
         #increase l to next possible invalid id
         print("ll1: ", l)
+        print("prs: ", prs)
         print("getting next invalid id")
         l = next_invalid_id(l, prs)  
         print("ll: ", l)
+        limit += 1
+        if limit > 2:
+            print('\t limit reached!')
+            break
 print("ans: ", ans)
         
        
 '''
+
+m
+11-22,95-115, 112-112
+
+
 too low
 
 11 -22

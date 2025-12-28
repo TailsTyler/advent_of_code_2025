@@ -17,6 +17,7 @@ def next_invalid_id(l, prs):
     #otherwise increase rs by 1
     else:
         l2 = l
+        print("prs = ", prs)
         prs = str(int(prs) + 1)
         i = 0
         l2 = ''
@@ -76,7 +77,7 @@ for e in row:
         i = 1
         #potential_repeating_string
         prs = get_prs(l, i)
-        #todo
+        print("aqu prs: ", prs)
         valid = False
         #compare prs to rest of l
         while i< len(l):
@@ -90,8 +91,9 @@ for e in row:
             print("ans += ", l)
             ans += int(l)
             print("ans: ", ans)
-        #increase l to next possible invalid id
-        l = next_invalid_id(l, prs)  
+        else:
+            #increase l to next possible invalid id
+            l = next_invalid_id(l, prs)  
         
        
         '''

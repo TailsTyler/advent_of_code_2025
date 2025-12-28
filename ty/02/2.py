@@ -4,29 +4,38 @@ with open('m.csv', newline='', encoding='utf-8') as f:
     row = next(csv.reader(f, delimiter=','))
 
 
-def all_9s(prs):
-    for e in prs:
+def all_9s(s):
+    for e in s:
         if e != '9':
             return False
     return True
 
 def next_invalid_id(l, prs):
+    print("l3: ", l)
     #if prs is all 9s, just increase l by 1
-    if all_9s(prs):
-        l2 = str(int(l) + 1)
+    if all_9s(l):
+        print("all 9s")
+        return str(int(l) + 1)
     #otherwise increase rs by 1
     else:
         l2 = l
+<<<<<<< HEAD
         print("prs = ", prs)
+=======
+        print("prs: ", prs)
+        print("prs = str(int(prs) + 1)")
+>>>>>>> refs/remotes/origin/master
         prs = str(int(prs) + 1)
+        print("prs: ", prs)
         i = 0
         l2 = ''
         print('l: ', l)
         print("finding any next rs")
-        print("len(l2): ", len(l2))
+        print("len(l): ", len(l))
         print("len(prs): ", len(prs))
-        print("len(l2) / len(prs): ", len(l2) / len(prs))
-        while i < len(l) / len(prs):
+        print("len(l) // len(prs): ", len(l) // len(prs))
+        while i < len(l) // len(prs):
+            print("l2 = ", l2)
             print("l2 += prs")
             l2 += prs
             i+=1
@@ -35,11 +44,15 @@ def next_invalid_id(l, prs):
             #if there is no prs, we want to stop looking by making l larger than r
             l2 = str(int(r) + 1)
     return l2
-def get_prs(l, i):
+def get_prs(l):
     #potential_repeating_string
     prs = l[0]
     print("len(l)//2: ", len(l)//2)
-    while i <= len(l)//2 and l[i] != l[0] or len(l) % i != 0:
+    # print("i <= len(l)//2")
+    # print(i <= len(l)//2)
+
+    i = 1
+    while i < len(l)//2 and l[i] != l[0] or len(l) % i != 0:
         print("l: ", l)
         print("i = ", i)
         '''
@@ -68,12 +81,14 @@ for e in row:
     i = e.index('-')
     l = e[0:i]
     r = e[i+1:]
-    start = True
+    known_invalid = False
+    limit = 0
     while int(l) <= int(r):
         print("l: ", l)
         print("r: ", r)
         # print("l[0:len(l)//2]: ", l[0:len(l)//2])
         # print("l[len(l)//2:]:  ", l[len(l)//2:])
+<<<<<<< HEAD
         i = 1
         #potential_repeating_string
         prs = get_prs(l, i)
@@ -94,27 +109,63 @@ for e in row:
         else:
             #increase l to next possible invalid id
             l = next_invalid_id(l, prs)  
+=======
+        if not known_invalid:
+            i = 1
+            #potential_repeating_string
+            prs = get_prs(l)
+            #compare prs to rest of l
+            while i< len(l):
+                for j in prs:
+                    if l[i] != j:
+                        print("break 1")
+                        break
+                break
+            known_invalid = True
+        else:
+            print("ans += ", l)
+            ans += int(l)
+            print("ans: ", ans, "\n")
+        #increase l to next possible invalid id
+        print("ll1: ", l)
+        print("prs: ", prs)
+        print("getting next invalid id")
+        l = next_invalid_id(l, prs)  
+        print("ll: ", l)
+        limit += 1
+        if limit > 2:
+            print('\t limit reached!')
+            break
+print("ans: ", ans)
+>>>>>>> refs/remotes/origin/master
         
        
-        '''
-        11 -22
-        111 - 222
-        1212 1313
+'''
 
-        21 21
-        2 2 2 2 
-        23 23 
+m
+11-22,95-115, 112-112
 
-        12 12
-        13 13 
 
-        12 22
-        1211 1212
-        121120 
-        999
-        9999
+too low
 
-        99 99
+11 -22
+111 - 222
+1212 1313
+
+21 21
+2 2 2 2 
+23 23 
+
+12 12
+13 13 
+
+12 22
+1211 1212
+121120 
+999
+9999
+
+99 99
 
 
 

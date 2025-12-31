@@ -20,7 +20,7 @@ finds appropriate start for when a new level of magnituede is reached eg
 '''
 def starter_for_this_num_of_digits(l):
     if len(l) == 2:
-        return '11'
+        return '11', '1'
     i = 2
     while i <= len(l):
         if len(l) % i == 0:
@@ -28,10 +28,11 @@ def starter_for_this_num_of_digits(l):
             rs_len = len(l) // i
             for x in range(rs_len - 1):
                 rs += '0'
+            
             ans = rs
             for x in range(i - 1):
                 ans += rs
-            return ans
+            return ans, rs
         i+=1
           
         
@@ -155,7 +156,7 @@ for e in row:
         print("ll1: ", l)
         print("prs: ", prs)
         print("getting next invalid id")
-        l = next_invalid_id(l, prs)  
+        l, prs = next_invalid_id(l, prs)  
         print("ll: ", l)
         limit += 1
         if limit > 2:

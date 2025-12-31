@@ -10,21 +10,49 @@ def all_9s(s):
             return False
     return True
 
+'''
+finds appropriate start for when a new level of magnituede is reached eg
+10 -> 11
+100 -> 111
+1000 -> 1010
+10000 -> 11111
+100000 -> 100100
+'''
+def starter_for_this_num_of_digits(l):
+    if len(l) == 2:
+        return '11'
+    i = 2
+    while i <= len(l):
+        if len(l) % i == 0:
+            rs = '1'
+            rs_len = len(l) // i
+            for x in range(rs_len - 1):
+                rs += '0'
+            ans = rs
+            for x in range(i - 1):
+                ans += rs
+            return ans
+        i+=1
+          
+        
+
+
+#used only when the current id is invalid
 def next_invalid_id(l, prs):
     print("l3: ", l)
+    if not known_invalid:
+        return get_prs(l)
     #if prs is all 9s, just increase l by 1
     if all_9s(l):
         print("all 9s")
-        return str(int(l) + 1)
+        #add one to make eg 999 become 1000
+        l = str(int(l) + 1)
+        return starter_for_this_num_of_digits(l)
     #otherwise increase rs by 1
     else:
         l2 = l
-<<<<<<< HEAD
-        print("prs = ", prs)
-=======
         print("prs: ", prs)
         print("prs = str(int(prs) + 1)")
->>>>>>> refs/remotes/origin/master
         prs = str(int(prs) + 1)
         print("prs: ", prs)
         i = 0
@@ -43,7 +71,7 @@ def next_invalid_id(l, prs):
         if l2 == '':
             #if there is no prs, we want to stop looking by making l larger than r
             l2 = str(int(r) + 1)
-    return l2
+        return l2
 def get_prs(l):
     #potential_repeating_string
     prs = l[0]
@@ -71,10 +99,27 @@ def get_prs(l):
         i+=1
     return prs
 
-# print("all_9s('1')",  all_9s('1'))
-# print("all_9s('19')",  all_9s('19'))
-# print("all_9s('999')",  all_9s('999'))
-# print("next_invalid_id('12', '1'): ", next_invalid_id('12', '1'))
+#gets the first invalid id above the current valid one
+def first_invalid_id(l, prs):
+    ans = prs
+    while len(ans) < len(l):
+        ans+= prs
+    if len(ans) != len(l):
+        print("first_invalid_id failed")
+    return ans
+
+def tests():
+    print("all_9s('1')",  all_9s('1'))
+    print("all_9s('19')",  all_9s('19'))
+    print("all_9s('999')",  all_9s('999'))
+    print("next_invalid_id('12', '1'): ", next_invalid_id('12', '1'))
+    print("starter_for_this_num_of_digits(10): ", starter_for_this_num_of_digits('10'))
+    print("starter_for_this_num_of_digits(100): ", starter_for_this_num_of_digits('100'))
+    print("starter_for_this_num_of_digits(1000): ", starter_for_this_num_of_digits('1000'))
+    print("starter_for_this_num_of_digits(10000): ", starter_for_this_num_of_digits('10000'))
+    print("starter_for_this_num_of_digits(100000): ", starter_for_this_num_of_digits('100000'))
+
+#tests()
 ans = 0
 for e in row:
     print('e: ', e)
@@ -88,28 +133,6 @@ for e in row:
         print("r: ", r)
         # print("l[0:len(l)//2]: ", l[0:len(l)//2])
         # print("l[len(l)//2:]:  ", l[len(l)//2:])
-<<<<<<< HEAD
-        i = 1
-        #potential_repeating_string
-        prs = get_prs(l, i)
-        print("aqu prs: ", prs)
-        valid = False
-        #compare prs to rest of l
-        while i< len(l):
-            for j in prs:
-                if l[i] != j:
-                    valid = True
-                    print("break 1")
-                    break
-            break
-        if not valid:
-            print("ans += ", l)
-            ans += int(l)
-            print("ans: ", ans)
-        else:
-            #increase l to next possible invalid id
-            l = next_invalid_id(l, prs)  
-=======
         if not known_invalid:
             i = 1
             #potential_repeating_string
@@ -121,8 +144,10 @@ for e in row:
                         print("break 1")
                         break
                 break
+            #we have a valid string, so make it the next possible invalid one by pasting the prs until it fills l. So like with '95', we start w '' and paste 9s until we have '99'
+            l = first_invalid_id(l, prs)
             known_invalid = True
-        else:
+        if known_invalid:
             print("ans += ", l)
             ans += int(l)
             print("ans: ", ans, "\n")
@@ -137,7 +162,6 @@ for e in row:
             print('\t limit reached!')
             break
 print("ans: ", ans)
->>>>>>> refs/remotes/origin/master
         
        
 '''

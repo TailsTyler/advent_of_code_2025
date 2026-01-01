@@ -1,6 +1,6 @@
 import csv
 
-with open('m.csv', newline='', encoding='utf-8') as f:
+with open('t.csv', newline='', encoding='utf-8') as f:
     row = next(csv.reader(f, delimiter=','))
 
 
@@ -12,11 +12,11 @@ def all_9s(s):
 
 '''
 finds appropriate start for when a new level of magnituede is reached eg
-10 -> 11
-100 -> 111
-1000 -> 1010
-10000 -> 11111
-100000 -> 100100
+10 -> 1 1
+100 -> 1 1 1
+1000 -> 10 10
+10000 -> 1 1 1 1 1
+100000 -> 100 100
 '''
 def starter_for_this_num_of_digits(l):
     if len(l) == 2:
@@ -41,8 +41,6 @@ def starter_for_this_num_of_digits(l):
 #used only when the current id is invalid
 def next_invalid_id(l, prs):
     print("l3: ", l)
-    if not known_invalid:
-        return get_prs(l)
     #if prs is all 9s, just increase l by 1
     if all_9s(l):
         print("all 9s")
@@ -72,7 +70,7 @@ def next_invalid_id(l, prs):
         if l2 == '':
             #if there is no prs, we want to stop looking by making l larger than r
             l2 = str(int(r) + 1)
-        return l2
+        return l2, prs
 def get_prs(l):
     #potential_repeating_string
     prs = l[0]
@@ -101,28 +99,44 @@ def get_prs(l):
     return prs
 
 #gets the first invalid id above the current valid one
-def first_invalid_id(l, prs):
-    ans = prs
-    while len(ans) < len(l):
-        ans+= prs
-    if len(ans) != len(l):
-        print("first_invalid_id failed")
-    return ans
+def first_invalid_id(l):
+    if int(l) < 11:
+        return '11', '1'
+    '''
+    consider the large l of 
+    11885 11880
+    the first invalid is
+    11885 11885.
+    In other words, divide the fewest times possible and paste the leftmost part
+    '''
+    cut = 2
+    while cut <= len(l):
+        #if the cut fits without a remainder,
+        if len(l) % cut == 0:
+            #create a possible answer
+            prs = l[0:len(l) // cut]
+            ans = prs * cut
+            #and if it is not less than the current l, return it
+            if ans >= l:
+                return ans, prs
+        cut += 1
+    '''even cut into single digets, the answer did not work. for example,
+    e:  1698522-1698528
+        1111111
+        is too small.
+        so make it
+        2222222
+    '''
+    prs = str(int(prs) + 1)
+    print("got an overflow situation")
+    if prs == "10":
+        return starter_for_this_num_of_digits(str(len(ans) + 1))
+    print('in a 1111111-type situation')
+    return prs * cut, prs
 
-def tests():
-    print("all_9s('1')",  all_9s('1'))
-    print("all_9s('19')",  all_9s('19'))
-    print("all_9s('999')",  all_9s('999'))
-    print("next_invalid_id('12', '1'): ", next_invalid_id('12', '1'))
-    print("starter_for_this_num_of_digits(10): ", starter_for_this_num_of_digits('10'))
-    print("starter_for_this_num_of_digits(100): ", starter_for_this_num_of_digits('100'))
-    print("starter_for_this_num_of_digits(1000): ", starter_for_this_num_of_digits('1000'))
-    print("starter_for_this_num_of_digits(10000): ", starter_for_this_num_of_digits('10000'))
-    print("starter_for_this_num_of_digits(100000): ", starter_for_this_num_of_digits('100000'))
 
-#tests()
-ans = 0
-for e in row:
+
+def process_row(e, row, ans):
     print('e: ', e)
     i = e.index('-')
     l = e[0:i]
@@ -135,20 +149,10 @@ for e in row:
         # print("l[0:len(l)//2]: ", l[0:len(l)//2])
         # print("l[len(l)//2:]:  ", l[len(l)//2:])
         if not known_invalid:
-            i = 1
-            #potential_repeating_string
-            prs = get_prs(l)
-            #compare prs to rest of l
-            while i< len(l):
-                for j in prs:
-                    if l[i] != j:
-                        print("break 1")
-                        break
-                break
-            #we have a valid string, so make it the next possible invalid one by pasting the prs until it fills l. So like with '95', we start w '' and paste 9s until we have '99'
-            l = first_invalid_id(l, prs)
+            l, prs = first_invalid_id(l)
             known_invalid = True
         if known_invalid:
+            print("ans was: ", ans, "\n")
             print("ans += ", l)
             ans += int(l)
             print("ans: ", ans, "\n")
@@ -162,77 +166,39 @@ for e in row:
         if limit > 2:
             print('\t limit reached!')
             break
-print("ans: ", ans)
-        
+    return ans
+
+def process_rows(row):
+    ans = 0
+    for e in row:
+        ans += process_row(e, row, ans)
+    return(ans)
+
+# def tests():
+    # print("all_9s('1')",  all_9s('1'))
+    # print("all_9s('19')",  all_9s('19'))
+    # print("all_9s('999')",  all_9s('999'))
+    # print("next_invalid_id('12', '1'): ", next_invalid_id('12', '1'))
+    # print("starter_for_this_num_of_digits(10): ", starter_for_this_num_of_digits('10'))
+    # print("starter_for_this_num_of_digits(100): ", starter_for_this_num_of_digits('100'))
+    # print("starter_for_this_num_of_digits(1000): ", starter_for_this_num_of_digits('1000'))
+    # print("starter_for_this_num_of_digits(10000): ", starter_for_this_num_of_digits('10000'))
+    # print("starter_for_this_num_of_digits(100000): ", starter_for_this_num_of_digits('100000'))
+    #if
+
+#tests()
+#correct answer for first 4: 1188514137
+
+print(process_rows(['11-22', '95-115','998-1012','1188511880-1188511890']))
+#print(process_rows(row))
+
        
 '''
 
-m
-11-22,95-115, 112-112
-
-
-too low
-
-11 -22
-111 - 222
-1212 1313
-
-21 21
-2 2 2 2 
-23 23 
-
-12 12
-13 13 
-
-12 22
-1211 1212
-121120 
-999
-9999
-
-99 99
-
-
-
-
-
-
-
-            
-            
-            
-            
-                
-
-
-
-
-        # elif not start or l[0:len(l)//2] == l[len(l)//2:]:
-        #     print("found one!: ", l)
-        #     ans+=int(l)
-        # else:
-        #     first_half = l[0:len(l)//2]
-        #     print("first_half = ", first_half)
-        #     second_half = l[len(l)//2:]
-        #     print("second_half: ", second_half)
-        #     if first_half > second_half:
-        #         l = first_half + first_half
-        #     else:
-        #         first_half = str(int(first_half) + 1)
-        #         l = first_half + first_half
-        #     print("l = ", l)
-        #     start = False
-        #     continue    
-        # #jumps ahead to next match 
-        # l = l[0:len(l)//2] #cut off 2nd half 
-        # l = str(int(l) + 1) #increment
-        # l += l # dupe 1st half to make 2nd half
-        # print('l increased to ', l)
-        # start = False
-        
-
-
-
+4102072058 you before
+4196610578 you now
+79532879456
+4174379265 correct
 
 
     

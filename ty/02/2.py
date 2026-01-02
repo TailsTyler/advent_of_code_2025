@@ -40,13 +40,12 @@ def starter_for_this_num_of_digits(l):
 
 #used only when the current id is invalid
 def next_invalid_id(l, prs):
-    print("ans was1: ", ans, "\n")
-    print("l3: ", l)
     #if prs is all 9s, just increase l by 1
     if all_9s(l):
         print("all 9s")
         #add one to make eg 999 become 1000
         l = str(int(l) + 1)
+        print("starter_for_this_num_of_digits")
         return starter_for_this_num_of_digits(l)
     #otherwise increase rs by 1
     else:
@@ -54,16 +53,13 @@ def next_invalid_id(l, prs):
         prs = str(int(prs) + 1)
         i = 0
         l2 = ''
-        print("ans was2: ", ans, "\n")
         while i < len(l) // len(prs):
             l2 += prs
             i+=1
-        print("ans was3: ", ans, "\n")
         if l2 == '':
             #if there is no prs, we want to stop looking by making l larger than r
             l2 = str(int(r) + 1)
         print('returning an l2 of', l2, "and a prs of ", prs)
-        print("ans was4: ", ans, "\n")
         return l2, prs
 def get_prs(l):
     #potential_repeating_string
@@ -112,6 +108,7 @@ def first_invalid_id(l):
             ans = prs * cut
             #and if it is not less than the current l, return it
             if ans >= l:
+                print("first_invalid_id returning ", ans, "&", prs)
                 return ans, prs
         cut += 1
     '''even cut into single digets, the answer did not work. for example,
@@ -123,7 +120,8 @@ def first_invalid_id(l):
     '''
     prs = str(int(prs) + 1)
     print("got an overflow situation")
-    if prs == "10":
+    if prs == "10": #TODO 100 prs could fail
+        print('got here')
         return starter_for_this_num_of_digits(str(len(ans) + 1))
     print('in a 1111111-type situation')
     return prs * cut, prs
@@ -131,6 +129,7 @@ def first_invalid_id(l):
 
 
 def process_row(e, row, ans):
+    print("ans was3: ", ans, "\n")
     print('e: ', e)
     i = e.index('-')
     l = e[0:i]
@@ -153,17 +152,20 @@ def process_row(e, row, ans):
         #increase l to next possible invalid id
         print("getting next invalid id")
         l, prs = next_invalid_id(l, prs)  
-        print("ans was5: ", ans, "\n")
+       
         limit += 1
         if limit > 2:
             print('\t limit reached!')
             break
+    print("ans was1: ", ans, "\n")
     return ans
 
 def process_rows(row):
     ans = 0
     for e in row:
+        print("ans was before process: ", ans, "\n")
         ans += process_row(e, row, ans)
+        print("ans was after process: ", ans, "\n")
     return(ans)
 
 # def tests():
@@ -185,7 +187,7 @@ debugging_mystery_23_added_to_ans = ['11-22','95-115', '1010-1011']
 print(process_rows(debugging_mystery_23_added_to_ans))
 #print(process_rows(row))
 
-       
+
 '''
 
 4102072058 you before

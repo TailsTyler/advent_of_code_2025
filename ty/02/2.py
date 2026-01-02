@@ -28,10 +28,10 @@ def starter_for_this_num_of_digits(l):
             rs_len = len(l) // i
             for x in range(rs_len - 1):
                 rs += '0'
-            
             ans = rs
             for x in range(i - 1):
                 ans += rs
+            print('\tstarter_for_this_num_of_digits made ans ', ans)
             return ans, rs
         i+=1
           
@@ -40,6 +40,7 @@ def starter_for_this_num_of_digits(l):
 
 #used only when the current id is invalid
 def next_invalid_id(l, prs):
+    print("ans was1: ", ans, "\n")
     print("l3: ", l)
     #if prs is all 9s, just increase l by 1
     if all_9s(l):
@@ -50,26 +51,19 @@ def next_invalid_id(l, prs):
     #otherwise increase rs by 1
     else:
         l2 = l
-        print("prs: ", prs)
-        print("prs = str(int(prs) + 1)")
         prs = str(int(prs) + 1)
-        print("prs: ", prs)
         i = 0
         l2 = ''
-        print('l: ', l)
-        print("finding any next rs")
-        print("len(l): ", len(l))
-        print("len(prs): ", len(prs))
-        print("len(l) // len(prs): ", len(l) // len(prs))
+        print("ans was2: ", ans, "\n")
         while i < len(l) // len(prs):
-            print("l2 = ", l2)
-            print("l2 += prs")
             l2 += prs
             i+=1
-            print("l2 = ", l2)
+        print("ans was3: ", ans, "\n")
         if l2 == '':
             #if there is no prs, we want to stop looking by making l larger than r
             l2 = str(int(r) + 1)
+        print('returning an l2 of', l2, "and a prs of ", prs)
+        print("ans was4: ", ans, "\n")
         return l2, prs
 def get_prs(l):
     #potential_repeating_string
@@ -157,11 +151,9 @@ def process_row(e, row, ans):
             ans += int(l)
             print("ans: ", ans, "\n")
         #increase l to next possible invalid id
-        print("ll1: ", l)
-        print("prs: ", prs)
         print("getting next invalid id")
         l, prs = next_invalid_id(l, prs)  
-        print("ll: ", l)
+        print("ans was5: ", ans, "\n")
         limit += 1
         if limit > 2:
             print('\t limit reached!')
@@ -188,8 +180,9 @@ def process_rows(row):
 
 #tests()
 #correct answer for first 4: 1188514137
-
-print(process_rows(['11-22', '95-115','998-1012','1188511880-1188511890']))
+first_4 = ['11-22', '95-115','998-1012','1188511880-1188511890']
+debugging_mystery_23_added_to_ans = ['11-22','95-115', '1010-1011']
+print(process_rows(debugging_mystery_23_added_to_ans))
 #print(process_rows(row))
 
        
